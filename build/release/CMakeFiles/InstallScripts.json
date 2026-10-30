@@ -1,0 +1,7 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/dev/sollib/build/release/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

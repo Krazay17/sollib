@@ -1,0 +1,9 @@
+# ninja log v6
+11	427	8150311881837352	CMakeFiles/solapp.dir/src/render/render_wgpu_class.cpp.obj	5c188c62057c6863
+72	345	8150312889426049	bin/SolApp.exe	e54f4466b424bb6
+6	673	8150311881790009	CMakeFiles/solapp.dir/src/main.cpp.obj	598f962887e0e3e4
+32	72	8150312889013562	CMakeFiles/solapp.dir/src/render/wgsl_shaders.cpp.obj	f70400e980b7e94f
+44	89	8150328550961283	CMakeFiles/solapp.dir/src/render/wgsl_shaders.cpp.obj	f70400e980b7e94f
+39	479	8150328550899035	CMakeFiles/solapp.dir/src/render/render_wgpu_class.cpp.obj	5c188c62057c6863
+35	727	8150328550851124	CMakeFiles/solapp.dir/src/main.cpp.obj	598f962887e0e3e4
+727	1012	8150328557791755	bin/SolApp.exe	e54f4466b424bb6

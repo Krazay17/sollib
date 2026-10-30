@@ -1,0 +1,20 @@
+[
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -imsvcC:\\libs\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi /FoCMakeFiles\\solapp.dir\\src\\main.cpp.obj /FdCMakeFiles\\solapp.dir\\ -c -- C:\\dev\\sollib\\src\\main.cpp",
+  "file": "C:/dev/sollib/src/main.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/solapp.dir/src/main.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -imsvcC:\\libs\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi /FoCMakeFiles\\solapp.dir\\src\\render\\render_wgpu_class.cpp.obj /FdCMakeFiles\\solapp.dir\\ -c -- C:\\dev\\sollib\\src\\render\\render_wgpu_class.cpp",
+  "file": "C:/dev/sollib/src/render/render_wgpu_class.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/solapp.dir/src/render/render_wgpu_class.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -imsvcC:\\libs\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi /FoCMakeFiles\\solapp.dir\\src\\render\\wgsl_shaders.cpp.obj /FdCMakeFiles\\solapp.dir\\ -c -- C:\\dev\\sollib\\src\\render\\wgsl_shaders.cpp",
+  "file": "C:/dev/sollib/src/render/wgsl_shaders.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/solapp.dir/src/render/wgsl_shaders.cpp.obj"
+}
+]

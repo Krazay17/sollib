@@ -1,0 +1,20 @@
+[
+{
+  "directory": "C:/dev/sollib/build/web",
+  "command": "C:\\libs\\emsdk\\upstream\\emscripten\\em++.exe -O3 -DNDEBUG -std=gnu++17 --use-port=emdawnwebgpu --use-port=contrib.glfw3 -o CMakeFiles\\solapp.dir\\src\\main.cpp.o -c C:\\dev\\sollib\\src\\main.cpp",
+  "file": "C:/dev/sollib/src/main.cpp",
+  "output": "C:/dev/sollib/build/web/CMakeFiles/solapp.dir/src/main.cpp.o"
+},
+{
+  "directory": "C:/dev/sollib/build/web",
+  "command": "C:\\libs\\emsdk\\upstream\\emscripten\\em++.exe -O3 -DNDEBUG -std=gnu++17 --use-port=emdawnwebgpu --use-port=contrib.glfw3 -o CMakeFiles\\solapp.dir\\src\\render\\render_wgpu_class.cpp.o -c C:\\dev\\sollib\\src\\render\\render_wgpu_class.cpp",
+  "file": "C:/dev/sollib/src/render/render_wgpu_class.cpp",
+  "output": "C:/dev/sollib/build/web/CMakeFiles/solapp.dir/src/render/render_wgpu_class.cpp.o"
+},
+{
+  "directory": "C:/dev/sollib/build/web",
+  "command": "C:\\libs\\emsdk\\upstream\\emscripten\\em++.exe -O3 -DNDEBUG -std=gnu++17 --use-port=emdawnwebgpu --use-port=contrib.glfw3 -o CMakeFiles\\solapp.dir\\src\\render\\wgsl_shaders.cpp.o -c C:\\dev\\sollib\\src\\render\\wgsl_shaders.cpp",
+  "file": "C:/dev/sollib/src/render/wgsl_shaders.cpp",
+  "output": "C:/dev/sollib/build/web/CMakeFiles/solapp.dir/src/render/wgsl_shaders.cpp.o"
+}
+]
