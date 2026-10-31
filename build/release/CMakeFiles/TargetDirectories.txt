@@ -1,9 +1,0 @@
-C:/dev/sollib/build/release/CMakeFiles/sollib.dir
-C:/dev/sollib/build/release/CMakeFiles/solapp.dir
-C:/dev/sollib/build/release/CMakeFiles/edit_cache.dir
-C:/dev/sollib/build/release/CMakeFiles/rebuild_cache.dir
-C:/dev/sollib/build/release/glm/CMakeFiles/edit_cache.dir
-C:/dev/sollib/build/release/glm/CMakeFiles/rebuild_cache.dir
-C:/dev/sollib/build/release/glm/glm/CMakeFiles/glm.dir
-C:/dev/sollib/build/release/glm/glm/CMakeFiles/edit_cache.dir
-C:/dev/sollib/build/release/glm/glm/CMakeFiles/rebuild_cache.dir

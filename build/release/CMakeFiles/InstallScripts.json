@@ -1,9 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/dev/sollib/build/release/cmake_install.cmake",
-		"C:/dev/sollib/build/release/glm/cmake_install.cmake",
-		"C:/dev/sollib/build/release/glm/glm/cmake_install.cmake"
-	],
-	"Parallel" : false
-}
