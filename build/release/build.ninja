@@ -11,20 +11,20 @@
 # =============================================================================
 
 # =============================================================================
-# Project: sollib
-# Configurations: Debug
+# Project: Sol_Library
+# Configurations: Release
 # =============================================================================
 
 #############################################
 # Minimal version of Ninja required by this file
 
-ninja_required_version = 1.5
+ninja_required_version = 1.8
 
 
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = Debug
+CONFIGURATION = Release
 # =============================================================================
 # Include auxiliary files.
 
@@ -41,46 +41,182 @@ include CMakeFiles\rules.ninja
 
 cmake_ninja_workdir = C$:\dev\sollib\build\release\
 # =============================================================================
+# Object build statements for STATIC_LIBRARY target sollib
+
+
+#############################################
+# Order-only phony target for sollib
+
+build cmake_object_order_depends_target_sollib: phony || cmake_object_order_depends_target_glm
+
+build CMakeFiles\sollib.dir\src\core\sol_core.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\core\sol_core.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\core\sol_core.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\core
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\core\sol_math.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\core\sol_math.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\core\sol_math.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\core
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\core\sol_net.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\core\sol_net.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\core\sol_net.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\core
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\game\game.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\game\game.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\game\game.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\game
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\render\render_wgpu.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\render\render_wgpu.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\render\render_wgpu.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\render
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\render\wgsl_shaders.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\render\wgsl_shaders.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\render\wgsl_shaders.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\render
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\world\systems\physics\s_physics.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\world\systems\physics\s_physics.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\world\systems\physics\s_physics.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\world\systems\physics
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\world\systems\systems.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\world\systems\systems.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\world\systems\systems.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\world\systems
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\world\systems\xform\s_xform.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\world\systems\xform\s_xform.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\world\systems\xform\s_xform.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\world\systems\xform
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+build CMakeFiles\sollib.dir\src\world\world.cpp.obj: CXX_COMPILER__sollib_unscanned_Release C$:\dev\sollib\src\world\world.cpp || cmake_object_order_depends_target_sollib
+  CONFIG = Release
+  DEFINES = -D_MBCS
+  DEP_FILE = CMakeFiles\sollib.dir\src\world\world.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -IC:\dev\sollib\src -IC:\libs\glm -imsvcC:\libs\include -imsvcC:\libs\JoltPhysics
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  OBJECT_FILE_DIR = CMakeFiles\sollib.dir\src\world
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target sollib
+
+
+#############################################
+# Link the static library lib\sollib.lib
+
+build lib\sollib.lib: CXX_STATIC_LIBRARY_LINKER__sollib_Release CMakeFiles\sollib.dir\src\core\sol_core.cpp.obj CMakeFiles\sollib.dir\src\core\sol_math.cpp.obj CMakeFiles\sollib.dir\src\core\sol_net.cpp.obj CMakeFiles\sollib.dir\src\game\game.cpp.obj CMakeFiles\sollib.dir\src\render\render_wgpu.cpp.obj CMakeFiles\sollib.dir\src\render\wgsl_shaders.cpp.obj CMakeFiles\sollib.dir\src\world\systems\physics\s_physics.cpp.obj CMakeFiles\sollib.dir\src\world\systems\systems.cpp.obj CMakeFiles\sollib.dir\src\world\systems\xform\s_xform.cpp.obj CMakeFiles\sollib.dir\src\world\world.cpp.obj || lib\glm.lib
+  CONFIG = Release
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -MD
+  OBJECT_DIR = CMakeFiles\sollib.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_COMPILE_PDB = CMakeFiles\sollib.dir\sollib.pdb
+  TARGET_FILE = lib\sollib.lib
+  TARGET_PDB = lib\sollib.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\sollib.dir
+
+# =============================================================================
 # Object build statements for EXECUTABLE target solapp
 
 
 #############################################
 # Order-only phony target for solapp
 
-build cmake_object_order_depends_target_solapp: phony || .
+build cmake_object_order_depends_target_solapp: phony || cmake_object_order_depends_target_glm cmake_object_order_depends_target_sollib
 
-build CMakeFiles\solapp.dir\src\main.cpp.obj: CXX_COMPILER__solapp_unscanned_Debug C$:\dev\sollib\src\main.cpp || cmake_object_order_depends_target_solapp
-  CONFIG = Debug
+build CMakeFiles\solapp.dir\platform\win\win_main.cpp.obj: CXX_COMPILER__solapp_unscanned_Release C$:\dev\sollib\platform\win\win_main.cpp || cmake_object_order_depends_target_solapp
+  CONFIG = Release
   DEFINES = -D_MBCS
-  DEP_FILE = CMakeFiles\solapp.dir\src\main.cpp.obj.d
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi
-  INCLUDES = -imsvcC:\libs\include
+  DEP_FILE = CMakeFiles\solapp.dir\platform\win\win_main.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -imsvcC:\libs\include
   OBJECT_DIR = CMakeFiles\solapp.dir
-  OBJECT_FILE_DIR = CMakeFiles\solapp.dir\src
+  OBJECT_FILE_DIR = CMakeFiles\solapp.dir\platform\win
   TARGET_COMPILE_PDB = CMakeFiles\solapp.dir\
   TARGET_PDB = bin\SolApp.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\solapp.dir
 
-build CMakeFiles\solapp.dir\src\render\render_wgpu_class.cpp.obj: CXX_COMPILER__solapp_unscanned_Debug C$:\dev\sollib\src\render\render_wgpu_class.cpp || cmake_object_order_depends_target_solapp
-  CONFIG = Debug
+build CMakeFiles\solapp.dir\platform\win\win_net.cpp.obj: CXX_COMPILER__solapp_unscanned_Release C$:\dev\sollib\platform\win\win_net.cpp || cmake_object_order_depends_target_solapp
+  CONFIG = Release
   DEFINES = -D_MBCS
-  DEP_FILE = CMakeFiles\solapp.dir\src\render\render_wgpu_class.cpp.obj.d
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi
-  INCLUDES = -imsvcC:\libs\include
+  DEP_FILE = CMakeFiles\solapp.dir\platform\win\win_net.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD
+  INCLUDES = -IC:\dev\sollib\include -imsvcC:\libs\include
   OBJECT_DIR = CMakeFiles\solapp.dir
-  OBJECT_FILE_DIR = CMakeFiles\solapp.dir\src\render
-  TARGET_COMPILE_PDB = CMakeFiles\solapp.dir\
-  TARGET_PDB = bin\SolApp.pdb
-  TARGET_SUPPORT_DIR = CMakeFiles\solapp.dir
-
-build CMakeFiles\solapp.dir\src\render\wgsl_shaders.cpp.obj: CXX_COMPILER__solapp_unscanned_Debug C$:\dev\sollib\src\render\wgsl_shaders.cpp || cmake_object_order_depends_target_solapp
-  CONFIG = Debug
-  DEFINES = -D_MBCS
-  DEP_FILE = CMakeFiles\solapp.dir\src\render\wgsl_shaders.cpp.obj.d
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi
-  INCLUDES = -imsvcC:\libs\include
-  OBJECT_DIR = CMakeFiles\solapp.dir
-  OBJECT_FILE_DIR = CMakeFiles\solapp.dir\src\render
+  OBJECT_FILE_DIR = CMakeFiles\solapp.dir\platform\win
   TARGET_COMPILE_PDB = CMakeFiles\solapp.dir\
   TARGET_PDB = bin\SolApp.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\solapp.dir
@@ -93,11 +229,11 @@ build CMakeFiles\solapp.dir\src\render\wgsl_shaders.cpp.obj: CXX_COMPILER__solap
 #############################################
 # Link the executable bin\SolApp.exe
 
-build bin\SolApp.exe: CXX_EXECUTABLE_LINKER__solapp_Debug CMakeFiles\solapp.dir\src\main.cpp.obj CMakeFiles\solapp.dir\src\render\render_wgpu_class.cpp.obj CMakeFiles\solapp.dir\src\render\wgsl_shaders.cpp.obj | C$:\libs\lib\glfw3.lib C$:\libs\lib\wgpu_native.lib
-  CONFIG = Debug
-  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -MDd -RTC1 -Zi
-  LINK_FLAGS = /debug /INCREMENTAL /subsystem:console
-  LINK_LIBRARIES = C:\libs\lib\glfw3.lib  C:\libs\lib\wgpu_native.lib  ws2_32.lib  bcrypt.lib  userenv.lib  ntdll.lib  advapi32.lib  kernel32.lib  user32.lib  gdi32.lib  shell32.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
+build bin\SolApp.exe: CXX_EXECUTABLE_LINKER__solapp_Release CMakeFiles\solapp.dir\platform\win\win_main.cpp.obj CMakeFiles\solapp.dir\platform\win\win_net.cpp.obj | lib\sollib.lib C$:\libs\lib\glfw3.lib C$:\libs\lib\wgpu_native.lib C$:\libs\JoltPhysics\out\windows-release\Jolt.lib lib\glm.lib || lib\glm.lib lib\sollib.lib
+  CONFIG = Release
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -MD
+  LINK_FLAGS = /INCREMENTAL:NO /subsystem:console
+  LINK_LIBRARIES = lib\sollib.lib  C:\libs\lib\glfw3.lib  ws2_32.lib  C:\libs\lib\wgpu_native.lib  bcrypt.lib  userenv.lib  ntdll.lib  advapi32.lib  kernel32.lib  user32.lib  gdi32.lib  shell32.lib  C:\libs\JoltPhysics\out\windows-release\Jolt.lib  lib\glm.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
   OBJECT_DIR = CMakeFiles\solapp.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
@@ -132,11 +268,116 @@ build CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
 build rebuild_cache: phony CMakeFiles\rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# C:/dev/sollib/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for edit_cache
+
+build glm\CMakeFiles\edit_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\dev\sollib\build\release\glm && "C:\Program Files\CMake\bin\cmake-gui.exe" -SC:\dev\sollib -BC:\dev\sollib\build\release"
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build glm\edit_cache: phony glm\CMakeFiles\edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build glm\CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\dev\sollib\build\release\glm && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\dev\sollib -BC:\dev\sollib\build\release"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build glm\rebuild_cache: phony glm\CMakeFiles\rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# C:/libs/glm/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target glm
+
+
+#############################################
+# Order-only phony target for glm
+
+build cmake_object_order_depends_target_glm: phony || .
+
+build glm\glm\CMakeFiles\glm.dir\detail\glm.cpp.obj: CXX_COMPILER__glm_unscanned_Release C$:\libs\glm\glm\detail\glm.cpp || cmake_object_order_depends_target_glm
+  CONFIG = Release
+  DEP_FILE = glm\glm\CMakeFiles\glm.dir\detail\glm.cpp.obj.d
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-switch-default
+  INCLUDES = -IC:\libs\glm
+  OBJECT_DIR = glm\glm\CMakeFiles\glm.dir
+  OBJECT_FILE_DIR = glm\glm\CMakeFiles\glm.dir\detail
+  TARGET_COMPILE_PDB = glm\glm\CMakeFiles\glm.dir\glm.pdb
+  TARGET_PDB = lib\glm.pdb
+  TARGET_SUPPORT_DIR = glm\glm\CMakeFiles\glm.dir
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target glm
+
+
+#############################################
+# Link the static library lib\glm.lib
+
+build lib\glm.lib: CXX_STATIC_LIBRARY_LINKER__glm_Release glm\glm\CMakeFiles\glm.dir\detail\glm.cpp.obj
+  CONFIG = Release
+  LANGUAGE_COMPILE_FLAGS = /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -MD
+  OBJECT_DIR = glm\glm\CMakeFiles\glm.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_COMPILE_PDB = glm\glm\CMakeFiles\glm.dir\glm.pdb
+  TARGET_FILE = lib\glm.lib
+  TARGET_PDB = lib\glm.pdb
+  TARGET_SUPPORT_DIR = glm\glm\CMakeFiles\glm.dir
+
+
+#############################################
+# Utility command for edit_cache
+
+build glm\glm\CMakeFiles\edit_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\dev\sollib\build\release\glm\glm && "C:\Program Files\CMake\bin\cmake-gui.exe" -SC:\dev\sollib -BC:\dev\sollib\build\release"
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build glm\glm\edit_cache: phony glm\glm\CMakeFiles\edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build glm\glm\CMakeFiles\rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\dev\sollib\build\release\glm\glm && "C:\Program Files\CMake\bin\cmake.exe" --regenerate-during-build -SC:\dev\sollib -BC:\dev\sollib\build\release"
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build glm\glm\rebuild_cache: phony glm\glm\CMakeFiles\rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
 
 build SolApp.exe: phony bin\SolApp.exe
 
+build glm: phony lib\glm.lib
+
+build glm.lib: phony lib\glm.lib
+
 build solapp: phony bin\SolApp.exe
+
+build sollib: phony lib\sollib.lib
+
+build sollib.lib: phony lib\sollib.lib
 
 # =============================================================================
 # Folder targets.
@@ -151,25 +392,67 @@ build codegen: phony
 # =============================================================================
 
 #############################################
+# Folder: C:/dev/sollib/build/release/glm
+
+build glm\codegen: phony glm\glm\codegen
+
+# =============================================================================
+
+#############################################
+# Folder: C:/dev/sollib/build/release/glm/glm
+
+build glm\glm\codegen: phony
+
+# =============================================================================
+
+#############################################
 # Folder: C:/dev/sollib/build/release
 
-build all: phony bin\SolApp.exe
+build all: phony lib\sollib.lib bin\SolApp.exe
+
+# =============================================================================
+
+#############################################
+# Folder: C:/dev/sollib/build/release/glm
+
+build glm\all: phony glm\glm\all
+
+# =============================================================================
+
+#############################################
+# Folder: C:/dev/sollib/build/release/glm/glm
+
+build glm\glm\all: phony lib\glm.lib
 
 # =============================================================================
 # Built-in targets
 
 
 #############################################
+# Phony target to force glob verification run.
+
+build C$:\dev\sollib\build\release\CMakeFiles\VerifyGlobs.cmake_force: phony
+
+
+#############################################
+# Re-run CMake to check if globbed directories changed.
+
+build C$:\dev\sollib\build\release\CMakeFiles\cmake.verify_globs: VERIFY_GLOBS | C$:\dev\sollib\build\release\CMakeFiles\VerifyGlobs.cmake_force
+  pool = console
+  restat = 1
+
+
+#############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja C$:\dev\sollib\build\release\cmake_install.cmake: RERUN_CMAKE | C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeFindDependencyMacro.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeRCInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckCXXSourceCompiles.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckIncludeFileCXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckLibraryExists.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindPackageHandleStandardArgs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindPackageMessage.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindThreads.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCXXLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCommonLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CheckCommon.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CheckSourceCompiles.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Initialize.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\WindowsPaths.cmake C$:\dev\sollib\CMakeLists.txt C$:\libs\lib\cmake\glfw3\glfw3Config.cmake C$:\libs\lib\cmake\glfw3\glfw3ConfigVersion.cmake C$:\libs\lib\cmake\glfw3\glfw3Targets-debug.cmake C$:\libs\lib\cmake\glfw3\glfw3Targets.cmake CMakeCache.txt CMakeFiles\4.4.4\CMakeCXXCompiler.cmake CMakeFiles\4.4.4\CMakeRCCompiler.cmake CMakeFiles\4.4.4\CMakeSystem.cmake
+build build.ninja C$:\dev\sollib\build\release\cmake_install.cmake C$:\dev\sollib\build\release\glm\cmake_install.cmake C$:\dev\sollib\build\release\glm\glm\cmake_install.cmake: RERUN_CMAKE C$:\dev\sollib\build\release\CMakeFiles\cmake.verify_globs | C$:\dev\sollib\build\release\CMakeFiles\VerifyGlobs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeFindDependencyMacro.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeRCInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckCSourceCompiles.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckIncludeFile.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckLibraryExists.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang-C.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindPackageHandleStandardArgs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindPackageMessage.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindThreads.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\GNUInstallDirs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCXXLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCommonLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CheckCommon.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CheckSourceCompiles.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD-C.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD-C.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang-C.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Initialize.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\WindowsPaths.cmake C$:\dev\sollib\CMakeLists.txt C$:\libs\glm\CMakeLists.txt C$:\libs\glm\glm\CMakeLists.txt C$:\libs\lib\cmake\glfw3\glfw3Config.cmake C$:\libs\lib\cmake\glfw3\glfw3ConfigVersion.cmake C$:\libs\lib\cmake\glfw3\glfw3Targets-debug.cmake C$:\libs\lib\cmake\glfw3\glfw3Targets.cmake CMakeCache.txt CMakeFiles\4.4.4\CMakeCCompiler.cmake CMakeFiles\4.4.4\CMakeCXXCompiler.cmake CMakeFiles\4.4.4\CMakeRCCompiler.cmake CMakeFiles\4.4.4\CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeFindDependencyMacro.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeRCInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckCXXSourceCompiles.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckIncludeFileCXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckLibraryExists.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindPackageHandleStandardArgs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindPackageMessage.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindThreads.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCXXLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCommonLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CheckCommon.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CheckSourceCompiles.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Initialize.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\WindowsPaths.cmake C$:\dev\sollib\CMakeLists.txt C$:\libs\lib\cmake\glfw3\glfw3Config.cmake C$:\libs\lib\cmake\glfw3\glfw3ConfigVersion.cmake C$:\libs\lib\cmake\glfw3\glfw3Targets-debug.cmake C$:\libs\lib\cmake\glfw3\glfw3Targets.cmake CMakeCache.txt CMakeFiles\4.4.4\CMakeCXXCompiler.cmake CMakeFiles\4.4.4\CMakeRCCompiler.cmake CMakeFiles\4.4.4\CMakeSystem.cmake: phony
+build C$:\dev\sollib\build\release\CMakeFiles\VerifyGlobs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCXXInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeCommonLanguageInclude.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeFindDependencyMacro.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeGenericSystem.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeInitializeConfigs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeLanguageInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeRCInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeSystemSpecificInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CMakeSystemSpecificInitialize.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckCSourceCompiles.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckIncludeFile.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\CheckLibraryExists.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\CMakeCommonCompilerMacros.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang-C.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Compiler\Clang.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindPackageHandleStandardArgs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindPackageMessage.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\FindThreads.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\GNUInstallDirs.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCXXLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CMakeCommonLinkerInformation.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CheckCommon.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Internal\CheckSourceCompiles.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD-C.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\LLD.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Linker\MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD-C.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-LLD.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Linker\Windows-MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang-C.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang-CXX.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Clang.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-Initialize.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows-MSVC.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\Windows.cmake C$:\Program$ Files\CMake\share\cmake-4.4\Modules\Platform\WindowsPaths.cmake C$:\dev\sollib\CMakeLists.txt C$:\libs\glm\CMakeLists.txt C$:\libs\glm\glm\CMakeLists.txt C$:\libs\lib\cmake\glfw3\glfw3Config.cmake C$:\libs\lib\cmake\glfw3\glfw3ConfigVersion.cmake C$:\libs\lib\cmake\glfw3\glfw3Targets-debug.cmake C$:\libs\lib\cmake\glfw3\glfw3Targets.cmake CMakeCache.txt CMakeFiles\4.4.4\CMakeCCompiler.cmake CMakeFiles\4.4.4\CMakeCXXCompiler.cmake CMakeFiles\4.4.4\CMakeRCCompiler.cmake CMakeFiles\4.4.4\CMakeSystem.cmake: phony
 
 
 #############################################

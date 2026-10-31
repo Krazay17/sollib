@@ -26,6 +26,24 @@
                 }
             },
             "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CXX_COMPILER": "clang-cl",
+                "CMAKE_C_COMPILER": "clang-cl"
+            }
+        },
+        {
+            "name": "debug",
+            "displayName": "Debug (clang-cl)",
+            "inherits": "base",
+            "binaryDir": "${sourceDir}/build/release",
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [
+                        "Windows"
+                    ]
+                }
+            },
+            "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "CMAKE_CXX_COMPILER": "clang-cl",
                 "CMAKE_C_COMPILER": "clang-cl"

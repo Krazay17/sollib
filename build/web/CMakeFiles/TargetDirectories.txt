@@ -1,3 +1,0 @@
-C:/dev/sollib/build/web/CMakeFiles/solapp.dir
-C:/dev/sollib/build/web/CMakeFiles/edit_cache.dir
-C:/dev/sollib/build/web/CMakeFiles/rebuild_cache.dir

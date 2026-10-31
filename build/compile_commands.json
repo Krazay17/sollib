@@ -1,20 +1,80 @@
 [
 {
   "directory": "C:/dev/sollib/build/release",
-  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -imsvcC:\\libs\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi /FoCMakeFiles\\solapp.dir\\src\\main.cpp.obj /FdCMakeFiles\\solapp.dir\\ -c -- C:\\dev\\sollib\\src\\main.cpp",
-  "file": "C:/dev/sollib/src/main.cpp",
-  "output": "C:/dev/sollib/build/release/CMakeFiles/solapp.dir/src/main.cpp.obj"
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\core\\sol_core.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\core\\sol_core.cpp",
+  "file": "C:/dev/sollib/src/core/sol_core.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/core/sol_core.cpp.obj"
 },
 {
   "directory": "C:/dev/sollib/build/release",
-  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -imsvcC:\\libs\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi /FoCMakeFiles\\solapp.dir\\src\\render\\render_wgpu_class.cpp.obj /FdCMakeFiles\\solapp.dir\\ -c -- C:\\dev\\sollib\\src\\render\\render_wgpu_class.cpp",
-  "file": "C:/dev/sollib/src/render/render_wgpu_class.cpp",
-  "output": "C:/dev/sollib/build/release/CMakeFiles/solapp.dir/src/render/render_wgpu_class.cpp.obj"
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\core\\sol_math.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\core\\sol_math.cpp",
+  "file": "C:/dev/sollib/src/core/sol_math.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/core/sol_math.cpp.obj"
 },
 {
   "directory": "C:/dev/sollib/build/release",
-  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -imsvcC:\\libs\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od -std:c++17 -MDd -RTC1 -Zi /FoCMakeFiles\\solapp.dir\\src\\render\\wgsl_shaders.cpp.obj /FdCMakeFiles\\solapp.dir\\ -c -- C:\\dev\\sollib\\src\\render\\wgsl_shaders.cpp",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\core\\sol_net.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\core\\sol_net.cpp",
+  "file": "C:/dev/sollib/src/core/sol_net.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/core/sol_net.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\game\\game.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\game\\game.cpp",
+  "file": "C:/dev/sollib/src/game/game.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/game/game.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\render\\render_wgpu.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\render\\render_wgpu.cpp",
+  "file": "C:/dev/sollib/src/render/render_wgpu.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/render/render_wgpu.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\render\\wgsl_shaders.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\render\\wgsl_shaders.cpp",
   "file": "C:/dev/sollib/src/render/wgsl_shaders.cpp",
-  "output": "C:/dev/sollib/build/release/CMakeFiles/solapp.dir/src/render/wgsl_shaders.cpp.obj"
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/render/wgsl_shaders.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\world\\systems\\physics\\s_physics.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\world\\systems\\physics\\s_physics.cpp",
+  "file": "C:/dev/sollib/src/world/systems/physics/s_physics.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/world/systems/physics/s_physics.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\world\\systems\\systems.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\world\\systems\\systems.cpp",
+  "file": "C:/dev/sollib/src/world/systems/systems.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/world/systems/systems.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\world\\systems\\xform\\s_xform.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\world\\systems\\xform\\s_xform.cpp",
+  "file": "C:/dev/sollib/src/world/systems/xform/s_xform.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/world/systems/xform/s_xform.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -IC:\\dev\\sollib\\src -IC:\\libs\\glm -imsvcC:\\libs\\include -imsvcC:\\libs\\JoltPhysics /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\sollib.dir\\src\\world\\world.cpp.obj /FdCMakeFiles\\sollib.dir\\sollib.pdb -c -- C:\\dev\\sollib\\src\\world\\world.cpp",
+  "file": "C:/dev/sollib/src/world/world.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/sollib.dir/src/world/world.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -imsvcC:\\libs\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\solapp.dir\\platform\\win\\win_main.cpp.obj /FdCMakeFiles\\solapp.dir\\ -c -- C:\\dev\\sollib\\platform\\win\\win_main.cpp",
+  "file": "C:/dev/sollib/platform/win/win_main.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/solapp.dir/platform/win/win_main.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -D_MBCS -IC:\\dev\\sollib\\include -imsvcC:\\libs\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD /FoCMakeFiles\\solapp.dir\\platform\\win\\win_net.cpp.obj /FdCMakeFiles\\solapp.dir\\ -c -- C:\\dev\\sollib\\platform\\win\\win_net.cpp",
+  "file": "C:/dev/sollib/platform/win/win_net.cpp",
+  "output": "C:/dev/sollib/build/release/CMakeFiles/solapp.dir/platform/win/win_net.cpp.obj"
+},
+{
+  "directory": "C:/dev/sollib/build/release",
+  "command": "\"C:\\Program Files\\LLVM\\bin\\clang-cl.exe\"  /nologo -TP -IC:\\libs\\glm /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -std:c++17 -MD -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-switch-default /Foglm\\glm\\CMakeFiles\\glm.dir\\detail\\glm.cpp.obj /Fdglm\\glm\\CMakeFiles\\glm.dir\\glm.pdb -c -- C:\\libs\\glm\\glm\\detail\\glm.cpp",
+  "file": "C:/libs/glm/glm/detail/glm.cpp",
+  "output": "C:/dev/sollib/build/release/glm/glm/CMakeFiles/glm.dir/detail/glm.cpp.obj"
 }
 ]
