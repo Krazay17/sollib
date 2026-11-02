@@ -1,4 +1,4 @@
-#include "render.hpp"
+#include "gfx.hpp"
 
 const Vertex kVertices[3] = {
     {{0.0f, 0.5f}, {1.0f, 0.0f, 0.0f}},

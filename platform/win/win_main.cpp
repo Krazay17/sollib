@@ -1,4 +1,4 @@
-#include "sol/sol.hpp"
+#include "core/core.hpp"
 #include <chrono>
 #include <thread>
 
@@ -17,16 +17,17 @@ static void on_framebuffer_size(GLFWwindow *wd, int w, int h)
 
 void main_tick()
 {
+    glfwPollEvents();
     double time = glfwGetTime();
     double dt = time - prev_time;
     prev_time = time;
     sol_core.Tick(dt);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 void start_tick()
 {
-    while (sol_core.running)
+    while (sol_core.running && !glfwWindowShouldClose(window))
         main_tick();
 }
 
@@ -43,17 +44,13 @@ int main()
 
     HWND hwnd = glfwGetWin32Window(window);
     HINSTANCE hinstance = (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE);
-    sol_core.Render_Init(hinstance, hwnd, fw, fh);
-    sol_core.Net_Init();
+    sol_core.gfx.Init(hinstance, hwnd, fw, fh);
+    sol_core.net.Init();
+    sol_core.Start();
 
-    Sol_Game_Start(&sol_core);
-
-    std::thread t1(start_tick);
-    while (!glfwWindowShouldClose(window))
-        glfwPollEvents();
+    start_tick();
 
     sol_core.Exit();
-    t1.join();
     glfwDestroyWindow(window);
     glfwTerminate();
 

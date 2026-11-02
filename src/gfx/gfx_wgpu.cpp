@@ -5,7 +5,7 @@
  * Created: 2026-10-29
  *
  */
-#include "render.hpp"
+#include "gfx.hpp"
 #include <iostream>
 #include <cstddef>
 #include <string>
@@ -84,7 +84,7 @@ static void adapter_info(WGPUAdapter adapter)
 
 static void onDeviceRequest(WGPURequestDeviceStatus status, WGPUDevice device, WGPUStringView message, WGPU_NULLABLE void *u1, WGPU_NULLABLE void *u2)
 {
-    SolRender *self = static_cast<SolRender *>(u1);
+    SolGfx *self = static_cast<SolGfx *>(u1);
     if (status != WGPURequestDeviceStatus_Success)
     {
         std::cout << "Get Device failed: " << sv(message) << std::endl;
@@ -101,7 +101,7 @@ static void onDeviceRequest(WGPURequestDeviceStatus status, WGPUDevice device, W
 
 static void onAdapterRequest(WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView message, WGPU_NULLABLE void *u1, WGPU_NULLABLE void *u2)
 {
-    SolRender *self = static_cast<SolRender *>(u1);
+    SolGfx *self = static_cast<SolGfx *>(u1);
     if (status != WGPURequestAdapterStatus_Success)
     {
         std::cout << "Get Adapter failed." << sv(message) << std::endl;
@@ -121,15 +121,15 @@ static void onAdapterRequest(WGPURequestAdapterStatus status, WGPUAdapter adapte
     wgpuAdapterRequestDevice(self->ctx->adapter, &device_desc, device_callback);
 }
 
-SolRender::SolRender(void *hinstance, void *hwnd, int w, int h)
+int SolGfx::Init(void *hinstance, void *hwnd, int w, int h)
 {
     ctx = new GpuCtx();
-    this->Resize(w, h);
+    Resize(w, h);
 
     const WGPUInstanceDescriptor desc = {0};
     ctx->instance = wgpuCreateInstance(&desc);
     if (!ctx->instance)
-        return;
+        return 1;
     std::cout << "WGPU instace: " << ctx->instance << std::endl;
 
 #ifdef __EMSCRIPTEN__
@@ -155,9 +155,11 @@ SolRender::SolRender(void *hinstance, void *hwnd, int w, int h)
         .userdata1 = this,
     };
     wgpuInstanceRequestAdapter(ctx->instance, &options, adapter_callback);
+
+    return 0;
 }
 
-SolRender::~SolRender()
+SolGfx::~SolGfx()
 {
     if (ctx->surface)
     {
@@ -180,7 +182,7 @@ SolRender::~SolRender()
     delete ctx;
 }
 
-void SolRender::Buffers_Create()
+void SolGfx::Buffers_Create()
 {
     WGPUBufferDescriptor bd = WGPU_BUFFER_DESCRIPTOR_INIT;
     bd.size = sizeof(kVertices);
@@ -190,7 +192,7 @@ void SolRender::Buffers_Create()
     wgpuQueueWriteBuffer(ctx->queue, ctx->vertex_buffer, 0, kVertices, sizeof(kVertices));
 }
 
-void SolRender::Surface_Configure()
+void SolGfx::Surface_Configure()
 {
     WGPUSurfaceCapabilities caps = WGPU_SURFACE_CAPABILITIES_INIT;
     wgpuSurfaceGetCapabilities(ctx->surface, ctx->adapter, &caps);
@@ -207,7 +209,7 @@ void SolRender::Surface_Configure()
     wgpuSurfaceCapabilitiesFreeMembers(caps);
 }
 
-void SolRender::Pipeline_Create()
+void SolGfx::Pipeline_Create()
 {
     WGPUShaderSourceWGSL wgsl = {};
     wgsl.chain.sType = WGPUSType_ShaderSourceWGSL;
@@ -256,7 +258,7 @@ void SolRender::Pipeline_Create()
     wgpuShaderModuleRelease(shader);
 }
 
-void SolRender::Resize(int w, int h)
+void SolGfx::Resize(int w, int h)
 {
     if (w <= 0 || h <= 0)
         return;
@@ -275,7 +277,7 @@ static bool Sync_Size(GpuCtx *ctx)
     h = (int)(ch * dpr);
     emscripten_set_canvas_element_size("#canvas", w, h);
 #else
-    w = ctx->width; // set by Sol_Render_Resize from the GLFW callback
+    w = ctx->width; // set by Sol_Gfx_Resize from the GLFW callback
     h = ctx->height;
 #endif
     if (w <= 0 || h <= 0)
@@ -291,7 +293,7 @@ static bool Sync_Size(GpuCtx *ctx)
     return true;
 }
 
-void SolRender::Update()
+void SolGfx::Update()
 {
     wgpuInstanceProcessEvents(ctx->instance);
     if (!ctx->ready || !Sync_Size(ctx))

@@ -1,4 +1,4 @@
-#include "render.hpp"
+#include "gfx.hpp"
 #include <iostream>
 #include <string>
 #include <string_view>
@@ -27,7 +27,7 @@ struct GpuCtx
 
 GpuCtx user_data = {0};
 
-SolRender::SolRender(void *hinstance, void *hwnd)
+SolGfx::SolGfx(void *hinstance, void *hwnd)
 {
     ctx = new GpuCtx();
 
@@ -62,7 +62,7 @@ SolRender::SolRender(void *hinstance, void *hwnd)
     wgpuInstanceRequestAdapter(ctx->instance, &options, adapter_callback);
 }
 
-SolRender::~SolRender()
+SolGfx::~SolGfx()
 {
     if (ctx->surface)
     {
@@ -225,7 +225,7 @@ static void onAdapterRequest(WGPURequestAdapterStatus status, WGPUAdapter adapte
     wgpuAdapterRequestDevice(ctx->adapter, &device_desc, device_callback);
 }
 
-int Sol_Render_Init(void *hinstance, void *hwnd)
+int Sol_Gfx_Init(void *hinstance, void *hwnd)
 {
     const WGPUInstanceDescriptor desc = {0};
     user_data.instance = wgpuCreateInstance(&desc);
@@ -256,7 +256,7 @@ int Sol_Render_Init(void *hinstance, void *hwnd)
     return 0;
 }
 
-int Sol_Render_Resize(int w, int h)
+int Sol_Gfx_Resize(int w, int h)
 {
     if (w <= 0 || h <= 0)
         return 1;
@@ -276,7 +276,7 @@ static bool Sync_Size()
     h = (int)(ch * dpr);
     emscripten_set_canvas_element_size("#canvas", w, h);
 #else
-    w = user_data.width; // set by Sol_Render_Resize from the GLFW callback
+    w = user_data.width; // set by Sol_Gfx_Resize from the GLFW callback
     h = user_data.height;
 #endif
     if (w <= 0 || h <= 0)
@@ -292,7 +292,7 @@ static bool Sync_Size()
     return true;
 }
 
-int Sol_Render_Tick()
+int Sol_Gfx_Tick()
 {
     wgpuInstanceProcessEvents(user_data.instance);
     if (!user_data.ready || !Sync_Size())
@@ -359,7 +359,7 @@ int Sol_Render_Tick()
     return 0;
 }
 
-int Sol_Render_Deinit()
+int Sol_Gfx_Deinit()
 {
     if (user_data.surface)
     {

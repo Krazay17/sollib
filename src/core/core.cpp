@@ -5,9 +5,9 @@
  * Created: 2026-10-30
  *
  */
-#include "sol/sol.hpp"
+#include "core.hpp"
 #include "world/world.hpp"
-#include "render/render.hpp"
+#include "gfx/gfx.hpp"
 
 SolCore *Sol_Init()
 {
@@ -22,23 +22,13 @@ void Sol_Deinit(SolCore *core)
 SolCore::SolCore()
 {
 }
-
 SolCore::~SolCore()
 {
-    if (renderer)
-    {
-        delete renderer;
-        renderer = nullptr;
-    }
-    if (net)
-    {
-        delete net;
-        net = nullptr;
-    }
 }
+
 void SolCore::Exit()
 {
-    this->running = false;
+    running = false;
 }
 
 void SolCore::Tick(double dt)
@@ -49,32 +39,28 @@ void SolCore::Tick(double dt)
     {
         accum -= timestep;
         for (auto &world : worlds)
+        {
             world->Step(timestep);
+        }
     }
     float alpha = static_cast<float>(accum / timestep);
     for (auto &world : worlds)
         world->Draw(alpha);
 
-    renderer->Update();
+    gfx.Update();
     std::cout << "Delta Time: " << dt << std::endl;
-}
-
-void SolCore::Render_Init(void *hinstance, void *hwnd, int w, int h)
-{
-    renderer = new SolRender(hinstance, hwnd, w, h);
-}
-
-void SolCore::Net_Init()
-{
-    net = new SolNet();
 }
 
 void SolCore::Resize(int w, int h)
 {
-    renderer->Resize(w, h);
+    gfx.Resize(w, h);
 }
 
-void SolCore::Create_World()
+SolWorld *SolCore::Create_World()
 {
-    worlds.push_back(new SolWorld);
+    auto world = std::make_unique<SolWorld>();
+    SolWorld *ptr = world.get();
+    worlds.push_back(std::move(world));
+
+    return ptr;
 }

@@ -1,4 +1,4 @@
-#include "sol/sol.hpp"
+#include "core/core.hpp"
 #include <chrono>
 #include <thread>
 
@@ -21,7 +21,7 @@ void main_tick()
     double dt = time - prev_time;
     prev_time = time;
     sol_core.Tick(dt);
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 int main()
@@ -35,7 +35,7 @@ int main()
     int fw, fh;
     glfwGetFramebufferSize(window, &fw, &fh);
 
-    sol_core.Render_Init(nullptr, window, fw, fh);
+    sol_core.gfx.Init(nullptr, window, fw, fh);
     emscripten_set_main_loop(main_tick, 0, true);
 
     return 0;

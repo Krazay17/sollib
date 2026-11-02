@@ -5,41 +5,37 @@
  * Created: 2026-10-31
  *
  */
-#include "sol/types.hpp"
 #include "world.hpp"
+#include <iostream>
 
-SolWorld::SolWorld()
-{
-    for (auto &id : sparse)
-        std::cout << id << std::endl;
-}
-SolWorld::~SolWorld()
-{
-}
+#include "sim/xform/xform.hpp"
+#include "sim/physics/physics.hpp"
+#include "sim/mode/mode.hpp"
+
 void SolWorld::Tick(double dt)
 {
 }
 void SolWorld::Step(double dt)
 {
-    std::cout << "World Step! " << dt << std::endl;
+    // std::cout << "World Step! " << dt << std::endl;
 
-    xform.Update(dt);
-    physics.Update(dt);
+    s_xform::CaptureLast(sim_state);
+    s_physics::Step(sim_state, dt);
+    s_mode::Update(sim_state, dt);
 }
 
 void SolWorld::Draw(float alpha)
 {
-    xform.UpdateDraw(alpha);
 }
 
 int SolWorld::Create_Ent()
 {
     int id = 0;
-    while (masks[id] != 0 && id < MAX_ENTS)
+    while (id < MAX_ENTS && sim_state.ents.masks[id] != 0)
         id++;
-    int idx = ent_count++;
-    sparse[id] = idx;
-    dense[idx] = id;
-    masks[id] = 1;
+    int idx = sim_state.ents.count++;
+    sim_state.ents.sparse[id] = idx;
+    sim_state.ents.dense[idx] = id;
+    sim_state.ents.masks[id] = 1;
     return id;
 }

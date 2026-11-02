@@ -1,4 +1,6 @@
-#include "sol/sol.hpp"
+#include "net/net.hpp"
+
+#include "core/core.hpp"
 #include <winsock2.h>
 #include <WS2tcpip.h>
 
@@ -17,33 +19,39 @@ static bool Socket_SetNonBlocking(SOCKET socket)
 
 SolNet::SolNet()
 {
-    this->ctx = new NetCtx();
+    
+}
+SolNet::~SolNet()
+{
+    if (ctx)
+    {
+        if (ctx->clientSocket != INVALID_SOCKET)
+            closesocket(ctx->clientSocket);
+
+        if (ctx->listenSocket != INVALID_SOCKET)
+            closesocket(ctx->listenSocket);
+
+        delete ctx;
+        ctx = nullptr;
+    }
+
+    if (socketInited)
+        WSACleanup();
+}
+
+int SolNet::Init()
+{
+    ctx = new NetCtx();
     int iResult;
-    iResult = WSAStartup(MAKEWORD(2, 2), &this->ctx->wsaData);
+    iResult = WSAStartup(MAKEWORD(2, 2), &ctx->wsaData);
     if (iResult != 0)
     {
         std::cout << "WSAStartup failed: " << std::endl;
-        return;
+        return 1;
     }
-    this->socketInited = true;
-}
-
-SolNet::~SolNet()
-{
-    if (this->ctx)
-    {
-        if (this->ctx->clientSocket != INVALID_SOCKET)
-            closesocket(this->ctx->clientSocket);
-
-        if (this->ctx->listenSocket != INVALID_SOCKET)
-            closesocket(this->ctx->listenSocket);
-
-        delete this->ctx;
-        this->ctx = nullptr;
-    }
-
-    if (this->socketInited)
-        WSACleanup();
+    socketInited = true;
+    
+    return 0;
 }
 
 int SolNet::Server_Init()
@@ -58,7 +66,7 @@ int SolNet::Server_Init()
 
     int iResult;
     // Resolve the local address and port to be used by the server
-    iResult = getaddrinfo(NULL, this->port, &hints, &result);
+    iResult = getaddrinfo(NULL, port, &hints, &result);
     if (iResult != 0)
     {
         printf("getaddrinfo failed: %d\n", iResult);
@@ -66,9 +74,9 @@ int SolNet::Server_Init()
         return 1;
     }
 
-    this->ctx->listenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
+    ctx->listenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 
-    if (this->ctx->listenSocket == INVALID_SOCKET)
+    if (ctx->listenSocket == INVALID_SOCKET)
     {
         printf("Error at socket(): %d\n", WSAGetLastError());
         freeaddrinfo(result);
@@ -77,36 +85,36 @@ int SolNet::Server_Init()
     }
 
     // Setup the TCP listening socket
-    iResult = bind(this->ctx->listenSocket, result->ai_addr, (int)result->ai_addrlen);
+    iResult = bind(ctx->listenSocket, result->ai_addr, (int)result->ai_addrlen);
     if (iResult == SOCKET_ERROR)
     {
         printf("bind failed with error: %d\n", WSAGetLastError());
         freeaddrinfo(result);
-        closesocket(this->ctx->listenSocket);
+        closesocket(ctx->listenSocket);
         WSACleanup();
         return 1;
     }
 
     freeaddrinfo(result);
 
-    if (listen(this->ctx->listenSocket, SOMAXCONN) == SOCKET_ERROR)
+    if (listen(ctx->listenSocket, SOMAXCONN) == SOCKET_ERROR)
     {
         printf("Listen failed with error: %d\n", WSAGetLastError());
-        closesocket(this->ctx->listenSocket);
+        closesocket(ctx->listenSocket);
         WSACleanup();
         return 1;
     }
-    std::cout << "Listen Socket: " << this->ctx->listenSocket << std::endl;
+    std::cout << "Listen Socket: " << ctx->listenSocket << std::endl;
 
-    if (!Socket_SetNonBlocking(this->ctx->listenSocket))
+    if (!Socket_SetNonBlocking(ctx->listenSocket))
     {
         printf("ioctlsocket failed: %d\n", WSAGetLastError());
-        closesocket(this->ctx->listenSocket);
-        this->ctx->listenSocket = INVALID_SOCKET;
+        closesocket(ctx->listenSocket);
+        ctx->listenSocket = INVALID_SOCKET;
         return 1;
     }
 
-    printf("Listening on port %s\n", this->port);
+    printf("Listening on port %s\n", port);
 
     return 0;
 }
@@ -114,9 +122,9 @@ int SolNet::Server_Init()
 void SolNet::Server_Poll()
 {
     // Try to accept a new connection.
-    if (this->ctx->clientSocket == INVALID_SOCKET)
+    if (ctx->clientSocket == INVALID_SOCKET)
     {
-        SOCKET client = accept(this->ctx->listenSocket, nullptr, nullptr);
+        SOCKET client = accept(ctx->listenSocket, nullptr, nullptr);
 
         if (client != INVALID_SOCKET)
         {
@@ -127,7 +135,7 @@ void SolNet::Server_Poll()
                 return;
             }
 
-            this->ctx->clientSocket = client;
+            ctx->clientSocket = client;
             printf("Client connected!\n");
         }
         else
@@ -140,12 +148,12 @@ void SolNet::Server_Poll()
     }
 
     // Try to receive data from the connected client.
-    if (this->ctx->clientSocket != INVALID_SOCKET)
+    if (ctx->clientSocket != INVALID_SOCKET)
     {
         char buffer[512];
 
         int received = recv(
-            this->ctx->clientSocket,
+            ctx->clientSocket,
             buffer,
             sizeof(buffer),
             0);
@@ -160,8 +168,8 @@ void SolNet::Server_Poll()
         {
             printf("Client disconnected\n");
 
-            closesocket(this->ctx->clientSocket);
-            this->ctx->clientSocket = INVALID_SOCKET;
+            closesocket(ctx->clientSocket);
+            ctx->clientSocket = INVALID_SOCKET;
         }
         else
         {
@@ -171,8 +179,8 @@ void SolNet::Server_Poll()
             {
                 printf("recv failed: %d\n", error);
 
-                closesocket(this->ctx->clientSocket);
-                this->ctx->clientSocket = INVALID_SOCKET;
+                closesocket(ctx->clientSocket);
+                ctx->clientSocket = INVALID_SOCKET;
             }
         }
     }

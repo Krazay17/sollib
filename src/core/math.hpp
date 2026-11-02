@@ -1,6 +1,5 @@
 #pragma once
 
-#include "sol/base.hpp"
 #include "glm/glm.hpp"
 
 namespace SOL

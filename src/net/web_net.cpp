@@ -1,8 +1,7 @@
-#include "sol/sol.hpp"
-
+#include "net/net.hpp"
 SolNet::SolNet()
 {
-
+    
 }
 SolNet::~SolNet()
 {

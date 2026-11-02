@@ -1,27 +1,23 @@
+/*
+ * File: world.hpp
+ * Author: Josh Massarella
+ * GitHub: https://github.com/Krazay17
+ * Created: 2026-11-01
+ * 
+*/
 #pragma once
-#include "sol/math.hpp"
 
-#include "systems/xform/s_xform.hpp"
-#include "systems/physics/s_physics.hpp"
+#include "sim/sim_state.hpp"
 
-#define MAX_ENTS 0xffffu
+#include "render/render.hpp"
 
 class SolWorld
 {
 public:
-    SolWorld();
-    ~SolWorld();
-
     void Tick(double dt);
     void Step(double dt);
     void Draw(float alpha);
     int Create_Ent();
 
-    std::array<int, MAX_ENTS> sparse;
-    std::array<int, MAX_ENTS> dense;
-    std::array<int, MAX_ENTS> masks;
-    int ent_count = 0;
-
-    SOL::XFORM xform;
-    SOL::PHYSICS physics;
+    SimState sim_state;
 };
