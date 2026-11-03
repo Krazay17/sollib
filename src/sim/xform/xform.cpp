@@ -9,5 +9,5 @@
 
 void s_xform::CaptureLast(SimState &sim)
 {
-    sim.c.pos_last = sim.c.pos;
+ //   sim.c.pos_last = sim.c.pos;
 }

@@ -1,4 +1,13 @@
+/*
+ * File: gfx.hpp
+ * Author: Josh Massarella
+ * GitHub: https://github.com/Krazay17
+ * Created: 2026-11-02
+ * 
+*/
 #pragma once
+
+#define MAX_RECTS 0xfffu
 
 struct Vertex
 {
@@ -6,30 +15,47 @@ struct Vertex
     float color[3];
 };
 
-struct GpuCtx;
+struct Rect
+{
+    float pos[4]; // x, y, width, height
+    float color[4];
+};
+
+enum Pipes
+{
+    PIPE_TESTTRI,
+    PIPE_RECT,
+    PIPE_COUNT,
+};
 
 extern const char *kShader;
+extern const char *RectShader;
 extern const Vertex kVertices[3];
+extern const Vertex kQuad[6];
 
+struct GpuCtx;
 class SolGfx
 {
 public:
+    SolGfx();
     ~SolGfx();
 
     int Init(void *hinstance, void *hwnd, int w, int h);
     void Resize(int w, int h);
-    void Update();
 
-    GpuCtx *ctx;
+    void Begin();
+    void End();
 
-    void Buffers_Create();
-    void Surface_Configure();
-    void Pipeline_Create();
+    void Create_Buffers();
+    void Config_Surface();
+    void Create_Pipelines();
+    
+    void Pipeline_TestTriangle();
+    void Pipeline_Rect();
 
+    void Triangle();
+    void Rectangles(const Rect *rects, uint32_t count);
+
+    GpuCtx *ctx = nullptr;
 private:
 };
-
-int Sol_Gfx_Init(void *hinstance, void *hwnd);
-int Sol_Gfx_Deinit();
-int Sol_Gfx_Tick();
-int Sol_Gfx_Resize(int width, int height);

@@ -12,7 +12,7 @@ double prev_time = 0;
 
 static void on_framebuffer_size(GLFWwindow *wd, int w, int h)
 {
-    sol_core.Resize(w, h);
+    sol_core.gfx.Resize(w, h);
 }
 
 void main_tick()
@@ -22,7 +22,7 @@ void main_tick()
     double dt = time - prev_time;
     prev_time = time;
     sol_core.Tick(dt);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    std::this_thread::sleep_for(std::chrono::milliseconds(5));
 }
 
 void start_tick()

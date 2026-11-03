@@ -17,25 +17,27 @@ void SolWorld::Tick(double dt)
 }
 void SolWorld::Step(double dt)
 {
-    // std::cout << "World Step! " << dt << std::endl;
-
     s_xform::CaptureLast(sim_state);
     s_physics::Step(sim_state, dt);
     s_mode::Update(sim_state, dt);
 }
 
-void SolWorld::Draw(float alpha)
+Entity SolWorld::Create_Ent()
 {
-}
+    uint32_t id;
+    if(!sim_state.free_ents.empty())
+    {
+        id = sim_state.free_ents.back();
+        sim_state.free_ents.pop_back();
+    }
+    else
+    {
+        id = static_cast<uint32_t>(sim_state.ents.size());
+        sim_state.ents.emplace_back();
+    }
+    EntityData &data = sim_state.ents[id];
+    data.alive = true;
+    data.mask = 0;
 
-int SolWorld::Create_Ent()
-{
-    int id = 0;
-    while (id < MAX_ENTS && sim_state.ents.masks[id] != 0)
-        id++;
-    int idx = sim_state.ents.count++;
-    sim_state.ents.sparse[id] = idx;
-    sim_state.ents.dense[idx] = id;
-    sim_state.ents.masks[id] = 1;
-    return id;
+    return {id, data.gen};
 }

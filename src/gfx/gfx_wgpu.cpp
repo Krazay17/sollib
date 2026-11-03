@@ -25,12 +25,24 @@ struct GpuCtx
     WGPUInstance instance;
     WGPUQueue queue;
     WGPUSurface surface;
-    WGPURenderPipeline pipeline;
-    WGPUSurfaceConfiguration surface_conf;
+
+    std::array<WGPURenderPipeline, PIPE_COUNT> pipelines;
     WGPUBuffer vertex_buffer;
+    WGPUBuffer quad_buffer;
+    WGPUBuffer rect_buffer;
+
+    WGPUTexture frame_texture;
+    WGPUTextureView frame_view;
+
+    WGPUCommandEncoder encoder;
+    WGPURenderPassEncoder pass;
+
+    WGPUSurfaceConfiguration surface_conf;
+
     int width;
     int height;
     bool ready;
+    bool frame_active;
 };
 
 static std::string_view sv(WGPUStringView s)
@@ -93,9 +105,9 @@ static void onDeviceRequest(WGPURequestDeviceStatus status, WGPUDevice device, W
     self->ctx->device = device;
     self->ctx->queue = wgpuDeviceGetQueue(device);
 
-    self->Surface_Configure();
-    self->Buffers_Create();
-    self->Pipeline_Create();
+    self->Config_Surface();
+    self->Create_Buffers();
+    self->Create_Pipelines();
     self->ctx->ready = true;
 }
 
@@ -119,6 +131,38 @@ static void onAdapterRequest(WGPURequestAdapterStatus status, WGPUAdapter adapte
         .userdata1 = self,
     };
     wgpuAdapterRequestDevice(self->ctx->adapter, &device_desc, device_callback);
+}
+
+SolGfx::SolGfx() {}
+
+SolGfx::~SolGfx()
+{
+    if (ctx->surface)
+    {
+        wgpuSurfaceUnconfigure(ctx->surface);
+        wgpuSurfaceRelease(ctx->surface);
+    }
+    if (ctx->vertex_buffer)
+        wgpuBufferRelease(ctx->vertex_buffer);
+    if (ctx->quad_buffer)
+        wgpuBufferRelease(ctx->quad_buffer);
+    if (ctx->rect_buffer)
+        wgpuBufferRelease(ctx->rect_buffer);
+    if (ctx->pipelines.size() > 0)
+    {
+        for (auto &p : ctx->pipelines)
+            wgpuRenderPipelineRelease(p);
+    }
+    if (ctx->queue)
+        wgpuQueueRelease(ctx->queue);
+    if (ctx->device)
+        wgpuDeviceRelease(ctx->device);
+    if (ctx->adapter)
+        wgpuAdapterRelease(ctx->adapter);
+    if (ctx->instance)
+        wgpuInstanceRelease(ctx->instance);
+
+    delete ctx;
 }
 
 int SolGfx::Init(void *hinstance, void *hwnd, int w, int h)
@@ -159,30 +203,7 @@ int SolGfx::Init(void *hinstance, void *hwnd, int w, int h)
     return 0;
 }
 
-SolGfx::~SolGfx()
-{
-    if (ctx->surface)
-    {
-        wgpuSurfaceUnconfigure(ctx->surface);
-        wgpuSurfaceRelease(ctx->surface);
-    }
-    if (ctx->vertex_buffer)
-        wgpuBufferRelease(ctx->vertex_buffer);
-    if (ctx->pipeline)
-        wgpuRenderPipelineRelease(ctx->pipeline);
-    if (ctx->queue)
-        wgpuQueueRelease(ctx->queue);
-    if (ctx->device)
-        wgpuDeviceRelease(ctx->device);
-    if (ctx->adapter)
-        wgpuAdapterRelease(ctx->adapter);
-    if (ctx->instance)
-        wgpuInstanceRelease(ctx->instance);
-
-    delete ctx;
-}
-
-void SolGfx::Buffers_Create()
+void SolGfx::Create_Buffers()
 {
     WGPUBufferDescriptor bd = WGPU_BUFFER_DESCRIPTOR_INIT;
     bd.size = sizeof(kVertices);
@@ -190,9 +211,21 @@ void SolGfx::Buffers_Create()
     ctx->vertex_buffer = wgpuDeviceCreateBuffer(ctx->device, &bd);
 
     wgpuQueueWriteBuffer(ctx->queue, ctx->vertex_buffer, 0, kVertices, sizeof(kVertices));
+
+    WGPUBufferDescriptor quad_desc = WGPU_BUFFER_DESCRIPTOR_INIT;
+    quad_desc.size = sizeof(kQuad);
+    quad_desc.usage = WGPUBufferUsage_Vertex | WGPUBufferUsage_CopyDst;
+    ctx->quad_buffer = wgpuDeviceCreateBuffer(ctx->device, &quad_desc);
+
+    wgpuQueueWriteBuffer(ctx->queue, ctx->quad_buffer, 0, kQuad, sizeof(kQuad));
+
+    WGPUBufferDescriptor rect_desc = WGPU_BUFFER_DESCRIPTOR_INIT;
+    rect_desc.size = sizeof(Rect) * MAX_RECTS;
+    rect_desc.usage = WGPUBufferUsage_Vertex | WGPUBufferUsage_CopyDst;
+    ctx->rect_buffer = wgpuDeviceCreateBuffer(ctx->device, &rect_desc);
 }
 
-void SolGfx::Surface_Configure()
+void SolGfx::Config_Surface()
 {
     WGPUSurfaceCapabilities caps = WGPU_SURFACE_CAPABILITIES_INIT;
     wgpuSurfaceGetCapabilities(ctx->surface, ctx->adapter, &caps);
@@ -209,7 +242,7 @@ void SolGfx::Surface_Configure()
     wgpuSurfaceCapabilitiesFreeMembers(caps);
 }
 
-void SolGfx::Pipeline_Create()
+void SolGfx::Pipeline_TestTriangle()
 {
     WGPUShaderSourceWGSL wgsl = {};
     wgsl.chain.sType = WGPUSType_ShaderSourceWGSL;
@@ -254,8 +287,73 @@ void SolGfx::Pipeline_Create()
     pd.vertex.bufferCount = 1;
     pd.vertex.buffers = &layout;
 
-    ctx->pipeline = wgpuDeviceCreateRenderPipeline(ctx->device, &pd);
+    ctx->pipelines[PIPE_TESTTRI] = wgpuDeviceCreateRenderPipeline(ctx->device, &pd);
     wgpuShaderModuleRelease(shader);
+}
+
+void SolGfx::Pipeline_Rect()
+{
+    WGPUShaderSourceWGSL wgsl = {};
+    wgsl.chain.sType = WGPUSType_ShaderSourceWGSL;
+    wgsl.code = {RectShader, WGPU_STRLEN};
+
+    WGPUShaderModuleDescriptor sm_desc = WGPU_SHADER_MODULE_DESCRIPTOR_INIT;
+    sm_desc.nextInChain = &wgsl.chain;
+    WGPUShaderModule shader = wgpuDeviceCreateShaderModule(ctx->device, &sm_desc);
+
+    WGPUColorTargetState color_target = WGPU_COLOR_TARGET_STATE_INIT;
+    color_target.format = ctx->surface_conf.format; // stored earlier
+    color_target.writeMask = WGPUColorWriteMask_All;
+
+    WGPUVertexAttribute quad_attrs[1] = {};
+    quad_attrs[0].format = WGPUVertexFormat_Float32x2;
+    quad_attrs[0].offset = 0;
+    quad_attrs[0].shaderLocation = 0;
+
+    WGPUVertexAttribute rect_attrs[2] = {};
+    rect_attrs[0].format = WGPUVertexFormat_Float32x4;
+    rect_attrs[0].offset = offsetof(Rect, pos);
+    rect_attrs[0].shaderLocation = 1;
+
+    rect_attrs[1].format = WGPUVertexFormat_Float32x4;
+    rect_attrs[1].offset = offsetof(Rect, color);
+    rect_attrs[1].shaderLocation = 2;
+
+    WGPUVertexBufferLayout layouts[2] = {};
+    layouts[0].stepMode = WGPUVertexStepMode_Vertex;
+    layouts[0].arrayStride = sizeof(Vertex);
+    layouts[0].attributeCount = 1;
+    layouts[0].attributes = quad_attrs;
+
+    layouts[1].stepMode = WGPUVertexStepMode_Instance;
+    layouts[1].arrayStride = sizeof(Rect);
+    layouts[1].attributeCount = 2;
+    layouts[1].attributes = rect_attrs;
+
+    WGPUFragmentState fragment = WGPU_FRAGMENT_STATE_INIT;
+    fragment.module = shader;
+    fragment.entryPoint = {"fs_main", WGPU_STRLEN};
+    fragment.targetCount = 1;
+    fragment.targets = &color_target;
+
+    WGPURenderPipelineDescriptor pd = WGPU_RENDER_PIPELINE_DESCRIPTOR_INIT;
+    pd.vertex.module = shader;
+    pd.vertex.entryPoint = {"vs_main", WGPU_STRLEN};
+    pd.fragment = &fragment;
+    pd.primitive.topology = WGPUPrimitiveTopology_TriangleList;
+    pd.multisample.count = 1;
+    pd.multisample.mask = ~0u;
+    pd.vertex.bufferCount = 2;
+    pd.vertex.buffers = layouts;
+
+    ctx->pipelines[PIPE_RECT] = wgpuDeviceCreateRenderPipeline(ctx->device, &pd);
+    wgpuShaderModuleRelease(shader);
+}
+
+void SolGfx::Create_Pipelines()
+{
+    Pipeline_TestTriangle();
+    Pipeline_Rect();
 }
 
 void SolGfx::Resize(int w, int h)
@@ -293,9 +391,13 @@ static bool Sync_Size(GpuCtx *ctx)
     return true;
 }
 
-void SolGfx::Update()
+void SolGfx::Begin()
 {
+    if (ctx->frame_active)
+        return;
+
     wgpuInstanceProcessEvents(ctx->instance);
+
     if (!ctx->ready || !Sync_Size(ctx))
         return;
 
@@ -320,13 +422,14 @@ void SolGfx::Update()
     if (!st.texture)
         return;
 
-    WGPUTextureView view = wgpuTextureCreateView(st.texture, nullptr);
+    ctx->frame_texture = st.texture;
+    ctx->frame_view = wgpuTextureCreateView(ctx->frame_texture, nullptr);
 
     WGPUCommandEncoderDescriptor enc_desc = WGPU_COMMAND_ENCODER_DESCRIPTOR_INIT;
-    WGPUCommandEncoder encoder = wgpuDeviceCreateCommandEncoder(ctx->device, &enc_desc);
+    ctx->encoder = wgpuDeviceCreateCommandEncoder(ctx->device, &enc_desc);
 
     WGPURenderPassColorAttachment ca = WGPU_RENDER_PASS_COLOR_ATTACHMENT_INIT;
-    ca.view = view;
+    ca.view = ctx->frame_view;
     ca.loadOp = WGPULoadOp_Clear;
     ca.storeOp = WGPUStoreOp_Store;
     ca.clearValue = {0.0, 0.0, 0.0, 1.0};
@@ -335,18 +438,23 @@ void SolGfx::Update()
     rp_desc.colorAttachmentCount = 1;
     rp_desc.colorAttachments = &ca;
 
-    WGPURenderPassEncoder pass = wgpuCommandEncoderBeginRenderPass(encoder, &rp_desc);
+    ctx->pass = wgpuCommandEncoderBeginRenderPass(ctx->encoder, &rp_desc);
 
-    wgpuRenderPassEncoderSetPipeline(pass, ctx->pipeline);
-    wgpuRenderPassEncoderSetVertexBuffer(pass, 0, ctx->vertex_buffer, 0, WGPU_WHOLE_SIZE);
-    wgpuRenderPassEncoderDraw(pass, 3, 1, 0, 0);
+    ctx->frame_active = true;
+}
 
-    wgpuRenderPassEncoderEnd(pass);
-    wgpuRenderPassEncoderRelease(pass);
+void SolGfx::End()
+{
+    if (!ctx->frame_active)
+        return;
+    wgpuRenderPassEncoderEnd(ctx->pass);
+    wgpuRenderPassEncoderRelease(ctx->pass);
+    ctx->pass = nullptr;
 
-    WGPUCommandBufferDescriptor cmdBufferDescriptor = {};
-    WGPUCommandBuffer cmd = wgpuCommandEncoderFinish(encoder, &cmdBufferDescriptor);
-    wgpuCommandEncoderRelease(encoder);
+    WGPUCommandBufferDescriptor cmd_desc = {};
+    WGPUCommandBuffer cmd = wgpuCommandEncoderFinish(ctx->encoder, &cmd_desc);
+    wgpuCommandEncoderRelease(ctx->encoder);
+    ctx->encoder = nullptr;
 
     wgpuQueueSubmit(ctx->queue, 1, &cmd);
     wgpuCommandBufferRelease(cmd);
@@ -355,6 +463,45 @@ void SolGfx::Update()
     wgpuSurfacePresent(ctx->surface);
 #endif
 
-    wgpuTextureViewRelease(view);
-    wgpuTextureRelease(st.texture);
+    wgpuTextureViewRelease(ctx->frame_view);
+    wgpuTextureRelease(ctx->frame_texture);
+
+    ctx->frame_view = nullptr;
+    ctx->frame_texture = nullptr;
+    ctx->frame_active = false;
+}
+
+void SolGfx::Triangle()
+{
+    wgpuRenderPassEncoderSetPipeline(ctx->pass, ctx->pipelines[PIPE_TESTTRI]);
+    wgpuRenderPassEncoderSetVertexBuffer(ctx->pass, 0, ctx->vertex_buffer, 0, WGPU_WHOLE_SIZE);
+    wgpuRenderPassEncoderDraw(ctx->pass, 3, 1, 0, 0);
+}
+
+void SolGfx::Rectangles(const Rect *rects, uint32_t count)
+{
+    if (!ctx->frame_active || !rects || count == 0)
+        return;
+
+    if (count > MAX_RECTS)
+        count = MAX_RECTS;
+
+    wgpuQueueWriteBuffer(
+        ctx->queue,
+        ctx->rect_buffer,
+        0,
+        rects,
+        sizeof(Rect) * count);
+
+    wgpuRenderPassEncoderSetPipeline(
+        ctx->pass, ctx->pipelines[PIPE_RECT]);
+
+    wgpuRenderPassEncoderSetVertexBuffer(
+        ctx->pass, 0, ctx->quad_buffer, 0, WGPU_WHOLE_SIZE);
+
+    wgpuRenderPassEncoderSetVertexBuffer(
+        ctx->pass, 1, ctx->rect_buffer, 0, WGPU_WHOLE_SIZE);
+
+    wgpuRenderPassEncoderDraw(
+        ctx->pass, 6, count, 0, 0);
 }

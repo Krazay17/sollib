@@ -44,17 +44,14 @@ void SolCore::Tick(double dt)
         }
     }
     float alpha = static_cast<float>(accum / timestep);
-    for (auto &world : worlds)
-        world->Draw(alpha);
 
-    gfx.Update();
-    std::cout << "Delta Time: " << dt << std::endl;
+    gfx.Begin();
+    printf("dt: %.4f alpha: %.4f\n", dt, alpha);
+    render.Update(worlds[view_world]->sim_state, alpha);
+    render.Draw(worlds[view_world]->sim_state);
+    gfx.End();
 }
 
-void SolCore::Resize(int w, int h)
-{
-    gfx.Resize(w, h);
-}
 
 SolWorld *SolCore::Create_World()
 {

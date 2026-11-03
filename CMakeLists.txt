@@ -10,7 +10,19 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+set(NRI_ENABLE_D3D12_SUPPORT OFF CACHE BOOL "" FORCE)
+set(NRI_ENABLE_D3D11_SUPPORT OFF CACHE BOOL "" FORCE)
 set(SOL_LIBS "C:/libs")
+set(RENDER_API_WGPU ON CACHE BOOL "" FORCE)
+set(RENDER_LIB webgpu)
+
+add_compile_options(
+    -Wno-missing-field-initializers 
+    -Wno-unused-parameter
+    -Wno-nullability-completeness
+    -Wno-error
+)
 
 # Dependencies
 add_subdirectory(
@@ -19,13 +31,38 @@ add_subdirectory(
     EXCLUDE_FROM_ALL
 )
 
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS 
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     ${CMAKE_SOURCE_DIR}/src/*.cpp
 )
 if(EMSCRIPTEN)
     list(FILTER SOURCES EXCLUDE REGEX "win_net\\.cpp$")
 else()
     list(FILTER SOURCES EXCLUDE REGEX "web_net\\.cpp$")
+endif()
+
+if(RENDER_API_WGPU)
+    list(FILTER SOURCES EXCLUDE REGEX "gfx_nri.cpp")
+elseif(RENDER_API_NRI)
+    list(FILTER SOURCES EXCLUDE REGEX "gfx_wgpu\\.cpp$")
+
+    set(NRI_LIB_DIR "${SOL_LIBS}/NRI/build/Release")
+    add_library(NRI STATIC IMPORTED)
+    set_target_properties(NRI PROPERTIES
+        IMPORTED_LOCATION "C:/libs/NRI/_Bin/Release"
+    )
+    foreach(lib NRI_Shared NRI_VK NRI_Validation)
+        add_library(${lib} STATIC IMPORTED)
+        set_target_properties(${lib} PROPERTIES
+            IMPORTED_LOCATION "${NRI_LIB_DIR}/${lib}.lib")
+    endforeach()
+
+    # one umbrella target, also fixes link order
+    add_library(NRI_All INTERFACE)
+    target_link_libraries(NRI_All INTERFACE NRI NRI_VK NRI_Validation NRI_Shared)
+    target_include_directories(NRI_All INTERFACE "${SOL_LIBS}/NRI/Include")
+    target_compile_definitions(NRI_All INTERFACE NRI_STATIC_LIBRARY=1)
+
+    set(RENDER_LIB NRI_All)
 endif()
 
 file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS 
@@ -39,8 +76,11 @@ add_library(sollib
 target_sources(sollib PRIVATE
     ${HEADERS}
 )
+target_precompile_headers(sollib PRIVATE ${CMAKE_SOURCE_DIR}/src/core/pch.hpp)
 target_include_directories(sollib PUBLIC
     ${CMAKE_SOURCE_DIR}/src
+    ${SOL_LIBS}/NRI/Include
+    ${SOL_LIBS}/glfw/include
 )
 if(EMSCRIPTEN)
     add_library(Jolt::Jolt STATIC IMPORTED GLOBAL)
@@ -64,10 +104,11 @@ else()
         IMPORTED_LOCATION "${SOL_LIBS}/JoltPhysics/out/windows-release/Jolt.lib"
         INTERFACE_INCLUDE_DIRECTORIES "${SOL_LIBS}/JoltPhysics"
     )
-    target_link_libraries(sollib PUBLIC glfw webgpu)
     if(WIN32)
     target_link_libraries(sollib PRIVATE
         ws2_32 bcrypt userenv ntdll advapi32 kernel32 user32 gdi32 shell32
+        glfw
+        ${RENDER_LIB}
     )
     endif()
 endif()

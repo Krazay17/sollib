@@ -1,3 +1,10 @@
+/*
+ * File: render.hpp
+ * Author: Josh Massarella
+ * GitHub: https://github.com/Krazay17
+ * Created: 2026-11-02
+ * 
+*/
 #pragma once
 
 #include "sim/sim_state.hpp"
@@ -7,9 +14,11 @@ class SolRender
 {
 public:
     SolRender(SolGfx *gfx) { this->gfx = gfx; };
-    void Draw(const SimState &, float alpha);
+    void Update(const SimState &sim, float alpha);
+    void Draw(const SimState &sim);
 
 private:
     SolGfx *gfx;
-    std::vector<glm::vec3> pos;
+    std::array<glm::vec3, MAX_ENTS> pos;
+    std::vector<Rect> rects;
 };

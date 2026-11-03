@@ -9,15 +9,12 @@
 
 #include "sim/sim_state.hpp"
 
-#include "render/render.hpp"
-
 class SolWorld
 {
 public:
     void Tick(double dt);
     void Step(double dt);
-    void Draw(float alpha);
-    int Create_Ent();
+    Entity Create_Ent();
 
     SimState sim_state;
 };

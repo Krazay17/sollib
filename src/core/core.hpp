@@ -26,7 +26,6 @@ public:
     SolCore();
     ~SolCore();
     void Tick(double dt);
-    void Resize(int w, int h);
     void Exit();
     void Start();
     
@@ -41,6 +40,8 @@ public:
     
     std::vector<std::unique_ptr<SolWorld>> worlds;
     SolWorld *Create_World();
+    uint16_t view_world;
+    uint16_t view_ent;
 
     const double timestep = 1.0 / 60.0;
 
