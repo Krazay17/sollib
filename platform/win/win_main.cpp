@@ -44,6 +44,8 @@ int main()
 
     HWND hwnd = glfwGetWin32Window(window);
     HINSTANCE hinstance = (HINSTANCE)GetWindowLongPtr(hwnd, GWLP_HINSTANCE);
+    
+    std::cout << "Start Gfx Init" << std::endl;
     sol_core.gfx.Init(hinstance, hwnd, fw, fh);
     sol_core.net.Init();
     sol_core.Start();

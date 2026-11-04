@@ -6,10 +6,13 @@
  *
  */
 #include "render.hpp"
-
+static float y = 0.5f;
 void SolRender::Update(const SimState &sim, float alpha)
 {
-    rects.clear();
+     rects.clear();
+    Rect test_rect = {{0.5, alpha, 0.5, 0.5}, {1, 1, 1, 1}};
+    rects.push_back(test_rect);
+    y += -0.001f;
 
     // for (auto &e : sim.ents)
     // {

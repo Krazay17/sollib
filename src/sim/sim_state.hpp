@@ -48,14 +48,14 @@ public:
 
     bool Has(Entity entity) const
     {
-        if (entity >= sparse.size())
+        if (entity.id >= sparse.size())
             return false;
 
-        uint32_t index = sparse[entity];
+        uint32_t index = sparse[entity.id];
 
         return index != INVALID &&
                index < dense.size() &&
-               dense[index] == entity;
+               dense[index].id == entity.id;
     }
 
     T *Get(Entity entity)
@@ -63,23 +63,23 @@ public:
         if (!Has(entity))
             return nullptr;
 
-        return &data[sparse[entity]];
+        return &data[sparse[entity.id]];
     }
 
     template <typename... Args>
     T &Add(Entity entity, Args &&...args)
     {
         if (Has(entity))
-            return data[sparse[entity]];
+            return data[sparse[entity.id]];
 
-        if (entity >= sparse.size())
-            sparse.resize(entity + 1, INVALID);
+        if (entity.id >= sparse.size())
+            sparse.resize(entity.id + 1, INVALID);
 
         uint32_t index = static_cast<uint32_t>(dense.size());
 
         dense.push_back(entity);
         data.emplace_back(std::forward<Args>(args)...);
-        sparse[entity] = index;
+        sparse[entity.id] = index;
 
         return data.back();
     }
@@ -109,11 +109,15 @@ struct Body3
     glm::vec3 vel;
     glm::vec3 dims;
 };
-
+struct Rules
+{
+    int minions = 100;
+};
 struct Components
 {
     SparseSet<Xform> xforms;
     SparseSet<Body2> body2;
+    SparseSet<Rules> rules;
 };
 
 struct Singletons

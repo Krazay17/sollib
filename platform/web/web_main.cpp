@@ -12,7 +12,7 @@ double prev_time = 0;
 
 static void on_framebuffer_size(GLFWwindow *wd, int w, int h)
 {
-    sol_core.Resize(w, h);
+    sol_core.gfx.Resize(w, h);
 }
 
 void main_tick()

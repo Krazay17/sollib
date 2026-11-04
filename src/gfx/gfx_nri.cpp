@@ -24,6 +24,8 @@ SolGfx::~SolGfx() {}
 
 int SolGfx::Init(void *hinstance, void *hwnd, int w, int h)
 {
+    std::cout << "NRI INIT" << std::endl;
+    
     ctx = new GpuCtx();
 
     nri::DeviceCreationDesc deviceDesc = {};
@@ -62,10 +64,8 @@ int SolGfx::Init(void *hinstance, void *hwnd, int w, int h)
     // 6. Create Fence for CPU-GPU synchronization
     nri::FenceDesc fence_desc = {};
     ctx->NRI.CreateFence(*device, fence_desc, ctx->m_FrameFence);
-
     return 0;
 }
-void SolGfx::Resize(int w, int h) {}
 
 void SolGfx::Begin()
 {

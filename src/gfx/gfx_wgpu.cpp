@@ -39,10 +39,6 @@ struct GpuCtx
 
     WGPUSurfaceConfiguration surface_conf;
 
-    int width;
-    int height;
-    bool ready;
-    bool frame_active;
 };
 
 static std::string_view sv(WGPUStringView s)
@@ -108,7 +104,7 @@ static void onDeviceRequest(WGPURequestDeviceStatus status, WGPUDevice device, W
     self->Config_Surface();
     self->Create_Buffers();
     self->Create_Pipelines();
-    self->ctx->ready = true;
+    self->ready = true;
 }
 
 static void onAdapterRequest(WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView message, WGPU_NULLABLE void *u1, WGPU_NULLABLE void *u2)
@@ -133,7 +129,11 @@ static void onAdapterRequest(WGPURequestAdapterStatus status, WGPUAdapter adapte
     wgpuAdapterRequestDevice(self->ctx->adapter, &device_desc, device_callback);
 }
 
-SolGfx::SolGfx() {}
+SolGfx::SolGfx()
+{
+    ctx = new GpuCtx();
+    *ctx = {};
+}
 
 SolGfx::~SolGfx()
 {
@@ -167,7 +167,6 @@ SolGfx::~SolGfx()
 
 int SolGfx::Init(void *hinstance, void *hwnd, int w, int h)
 {
-    ctx = new GpuCtx();
     Resize(w, h);
 
     const WGPUInstanceDescriptor desc = {0};
@@ -233,8 +232,8 @@ void SolGfx::Config_Surface()
     ctx->surface_conf = WGPU_SURFACE_CONFIGURATION_INIT;
     ctx->surface_conf.device = ctx->device;
     ctx->surface_conf.format = caps.formats[0];
-    ctx->surface_conf.width = ctx->width;
-    ctx->surface_conf.height = ctx->height;
+    ctx->surface_conf.width = width;
+    ctx->surface_conf.height = height;
     ctx->surface_conf.usage = WGPUTextureUsage_RenderAttachment;
     ctx->surface_conf.presentMode = WGPUPresentMode_Fifo;
     ctx->surface_conf.alphaMode = caps.alphaModes[0];
@@ -356,14 +355,6 @@ void SolGfx::Create_Pipelines()
     Pipeline_Rect();
 }
 
-void SolGfx::Resize(int w, int h)
-{
-    if (w <= 0 || h <= 0)
-        return;
-    ctx->width = w;
-    ctx->height = h;
-}
-
 static bool Sync_Size(GpuCtx *ctx)
 {
     int w, h;
@@ -393,12 +384,12 @@ static bool Sync_Size(GpuCtx *ctx)
 
 void SolGfx::Begin()
 {
-    if (ctx->frame_active)
+    if (frame_active)
         return;
 
     wgpuInstanceProcessEvents(ctx->instance);
 
-    if (!ctx->ready || !Sync_Size(ctx))
+    if (!ready || !Sync_Size(ctx))
         return;
 
     WGPUSurfaceTexture st = WGPU_SURFACE_TEXTURE_INIT;
@@ -440,12 +431,12 @@ void SolGfx::Begin()
 
     ctx->pass = wgpuCommandEncoderBeginRenderPass(ctx->encoder, &rp_desc);
 
-    ctx->frame_active = true;
+    frame_active = true;
 }
 
 void SolGfx::End()
 {
-    if (!ctx->frame_active)
+    if (!frame_active)
         return;
     wgpuRenderPassEncoderEnd(ctx->pass);
     wgpuRenderPassEncoderRelease(ctx->pass);
@@ -468,11 +459,13 @@ void SolGfx::End()
 
     ctx->frame_view = nullptr;
     ctx->frame_texture = nullptr;
-    ctx->frame_active = false;
+    frame_active = false;
 }
 
 void SolGfx::Triangle()
 {
+    if (!frame_active)
+        return;
     wgpuRenderPassEncoderSetPipeline(ctx->pass, ctx->pipelines[PIPE_TESTTRI]);
     wgpuRenderPassEncoderSetVertexBuffer(ctx->pass, 0, ctx->vertex_buffer, 0, WGPU_WHOLE_SIZE);
     wgpuRenderPassEncoderDraw(ctx->pass, 3, 1, 0, 0);
@@ -480,7 +473,7 @@ void SolGfx::Triangle()
 
 void SolGfx::Rectangles(const Rect *rects, uint32_t count)
 {
-    if (!ctx->frame_active || !rects || count == 0)
+    if (!frame_active || !rects || count == 0)
         return;
 
     if (count > MAX_RECTS)
@@ -493,15 +486,8 @@ void SolGfx::Rectangles(const Rect *rects, uint32_t count)
         rects,
         sizeof(Rect) * count);
 
-    wgpuRenderPassEncoderSetPipeline(
-        ctx->pass, ctx->pipelines[PIPE_RECT]);
-
-    wgpuRenderPassEncoderSetVertexBuffer(
-        ctx->pass, 0, ctx->quad_buffer, 0, WGPU_WHOLE_SIZE);
-
-    wgpuRenderPassEncoderSetVertexBuffer(
-        ctx->pass, 1, ctx->rect_buffer, 0, WGPU_WHOLE_SIZE);
-
-    wgpuRenderPassEncoderDraw(
-        ctx->pass, 6, count, 0, 0);
+    wgpuRenderPassEncoderSetPipeline(ctx->pass, ctx->pipelines[PIPE_RECT]);
+    wgpuRenderPassEncoderSetVertexBuffer(ctx->pass, 0, ctx->quad_buffer, 0, WGPU_WHOLE_SIZE);
+    wgpuRenderPassEncoderSetVertexBuffer(ctx->pass, 1, ctx->rect_buffer, 0, WGPU_WHOLE_SIZE);
+    wgpuRenderPassEncoderDraw(ctx->pass, 6, count, 0, 0);
 }

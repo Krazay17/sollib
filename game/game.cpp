@@ -12,8 +12,10 @@ void SolCore::Start()
 {
     net.Server_Init();
     SolWorld *world = Create_World();
+    
+    Entity e = world->Create_Ent();
+    world->sim_state.c.rules.Add(e);
 
-    // int id = world->Create_Ent();
     // world->sim_state.c.pos[0] = glm::vec3(0.5, 1.0, 0);
     // world->sim_state.c.view[0] = VIEW_TESTRECT;
     // world->sim_state.c.body.dims[0] = glm::vec3(0.5, 0.5, 0);

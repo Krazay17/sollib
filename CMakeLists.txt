@@ -14,7 +14,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(NRI_ENABLE_D3D12_SUPPORT OFF CACHE BOOL "" FORCE)
 set(NRI_ENABLE_D3D11_SUPPORT OFF CACHE BOOL "" FORCE)
 set(SOL_LIBS "C:/libs")
-set(RENDER_API_WGPU ON CACHE BOOL "" FORCE)
+option(RENDER_API_WGPU "Link to webgpu" ON)
+option(RENDER_API_NRI "Link to webgpu" OFF)
 set(RENDER_LIB webgpu)
 
 add_compile_options(
@@ -43,12 +44,12 @@ endif()
 if(RENDER_API_WGPU)
     list(FILTER SOURCES EXCLUDE REGEX "gfx_nri.cpp")
 elseif(RENDER_API_NRI)
-    list(FILTER SOURCES EXCLUDE REGEX "gfx_wgpu\\.cpp$")
+    list(FILTER SOURCES EXCLUDE REGEX "gfx_wgpu.cpp")
 
     set(NRI_LIB_DIR "${SOL_LIBS}/NRI/build/Release")
     add_library(NRI STATIC IMPORTED)
     set_target_properties(NRI PROPERTIES
-        IMPORTED_LOCATION "C:/libs/NRI/_Bin/Release"
+        IMPORTED_LOCATION "C:/libs/NRI/_Bin/Release/NRI.lib"
     )
     foreach(lib NRI_Shared NRI_VK NRI_Validation)
         add_library(${lib} STATIC IMPORTED)
@@ -94,10 +95,10 @@ if(EMSCRIPTEN)
     target_compile_options(sollib PRIVATE ${SOL_EM_PORTS})
 else()
     find_package(glfw3 REQUIRED)
-    add_library(webgpu SHARED IMPORTED)
+    add_library(webgpu STATIC IMPORTED)
     set_target_properties(webgpu PROPERTIES
         INTERFACE_INCLUDE_DIRECTORIES "${SOL_LIBS}/include"
-        IMPORTED_IMPLIB "${SOL_LIBS}/lib/wgpu_native.lib"
+        IMPORTED_LOCATION "${SOL_LIBS}/lib/wgpu_native.lib"
     )
     add_library(Jolt::Jolt STATIC IMPORTED GLOBAL)
     set_target_properties(Jolt::Jolt PROPERTIES

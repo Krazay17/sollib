@@ -3,8 +3,8 @@
  * Author: Josh Massarella
  * GitHub: https://github.com/Krazay17
  * Created: 2026-11-02
- * 
-*/
+ *
+ */
 #pragma once
 
 #define MAX_RECTS 0xfffu
@@ -41,7 +41,13 @@ public:
     ~SolGfx();
 
     int Init(void *hinstance, void *hwnd, int w, int h);
-    void Resize(int w, int h);
+    void Resize(int w, int h)
+    {
+        if (w <= 0 || h <= 0)
+            return;
+        width = w;
+        height = h;
+    }
 
     void Begin();
     void End();
@@ -49,7 +55,7 @@ public:
     void Create_Buffers();
     void Config_Surface();
     void Create_Pipelines();
-    
+
     void Pipeline_TestTriangle();
     void Pipeline_Rect();
 
@@ -57,5 +63,11 @@ public:
     void Rectangles(const Rect *rects, uint32_t count);
 
     GpuCtx *ctx = nullptr;
+
+    int width = 800;
+    int height = 600;
+    bool frame_active = false;
+    bool ready = false;
+
 private:
 };
